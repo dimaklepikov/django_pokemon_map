@@ -3,12 +3,12 @@ from django.db import models
 
 class Pokemon(models.Model):
     title = models.CharField(max_length=120, verbose_name='название на руссокм')
-    title_en = models.CharField(max_length=120, null=True, verbose_name='название на анлгийском')
-    title_jp = models.CharField(max_length=120, null=True, verbose_name='название на японском')
+    title_en = models.CharField(max_length=120, verbose_name='название на анлгийском')
+    title_jp = models.CharField(max_length=120, verbose_name='название на японском')
     image = models.ImageField(null=True, blank=True, verbose_name='картинка')
-    description = models.TextField(null=True, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
     previous_evolution = models.ForeignKey('self',
-                                           on_delete=models.CASCADE,
+                                           on_delete=models.SET_NULL,
                                            blank=True,
                                            null=True,
                                            related_name='next_evolutions',
@@ -28,4 +28,4 @@ class PokemonEntity(models.Model):
     strength = models.IntegerField(null=True, verbose_name='сила')
     defence = models.IntegerField(null=True, verbose_name='защита')
     stamina = models.IntegerField(null=True, verbose_name='мана')
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, verbose_name='покемон')
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='покемон')
